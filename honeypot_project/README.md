@@ -214,4 +214,4 @@ Each event is stored as a JSON object:
 
 ## License
 
-This project is intended for **educational use only**.
+This project is licensed under the [MIT] License - see the [LICENSE](LICENSE.txt) file for details.
