@@ -2,11 +2,11 @@
 
 ## Overview
 
-This project implements a **low-interaction honeypot** in Python designed to simulate a corporate internal web portal and capture suspicious activity such as:
+This project implements a **low-interaction honeypot** in Python designed to simulate a corporate internal web portal and SSH & telnet authentication to capture suspicious activity such as:
 
 * reconnaissance probing (e.g., `/admin`, `/phpmyadmin`)
 * automated scanner traffic (e.g., `sqlmap`, `nikto`)
-* credential guessing attempts
+* brute force attempts against credentials across multiple protocols
 * repeated access patterns from a single source
 
 ---
@@ -15,7 +15,11 @@ This project implements a **low-interaction honeypot** in Python designed to sim
 
 ### Low-Interaction Honeypot
 
-This system simulates services (HTTP endpoints) without providing a real backend or shell access. It is safer and easier to control than high-interaction honeypots.
+This project implements a low-interaction, multi-service honeypot in Python that simulates:
+
+HTTP web portal (Flask-based)
+SSH authentication service (decoy)
+Telnet login service (decoy)
 
 ### Structured Logging
 
@@ -37,13 +41,15 @@ Activity is labeled using simple, explainable rules such as:
 ```text
 honeypot_project/
 ├── app/
-│   ├── main.py                # Entry point (starts Flask server)
+│   ├── main.py                # Starts all services (HTTP + SSH + Telnet)
 │   ├── config.py              # Configuration (ports, rules, paths)
-│   ├── logger.py              # JSON event logging
-│   ├── detectors.py           # Classification logic
+│   ├── logger.py              # Thread-safe JSON event logging
+│   ├── detectors.py           # Event classification logic
 │   ├── report.py              # Summary report generator
 │   └── services/
-│       └── http_honeypot.py   # Flask routes / honeypot behavior
+        ├── http_honeypot.py   # Flask routes / honeypot behavior
+        ├── ssh_honeypot.py    # Fake SSH service (port 2222)
+│       └── telnet_honeypot.py # Fake Telnet service (port 2323)
 │
 ├── templates/
 │   ├── index.html             # Landing page
@@ -145,6 +151,59 @@ curl -X POST http://127.0.0.1:8080/login -d "username=admin&password=admin"
 curl -X POST http://127.0.0.1:8080/login -d "username=root&password=toor"
 ```
 
+### SSH Testing
+```text
+Use netcat or telnet:
+```
+```bash
+nc 127.0.0.1 2222
+
+or:
+
+telnet 127.0.0.1 2222
+```
+```text
+Expected behavior:
+
+SSH banner displayed
+prompted for username/password
+connection denied
+credentials logged
+```
+
+### Telnet Testing
+```bash
+telnet 127.0.0.1 2323
+
+or:
+
+nc 127.0.0.1 2323
+```
+```text
+Expected behavior:
+
+Linux-style login prompt
+accepts username/password
+displays “Login incorrect”
+credentials logged
+```
+---
+
+---
+## Viewing Logs
+```bash
+tail -n 20 logs/events.jsonl
+```
+```text
+Each entry includes:
+
+timestamp
+service (http, ssh, telnet)
+event type
+source IP
+credentials (if applicable)
+labels
+```
 ---
 
 ## Generating a Report
