@@ -17,9 +17,9 @@ This project implements a **low-interaction honeypot** in Python designed to sim
 
 This project implements a low-interaction, multi-service honeypot in Python that simulates:
 
-HTTP web portal (Flask-based)
-SSH authentication service (decoy)
-Telnet login service (decoy)
+* HTTP web portal (Flask-based)
+* SSH authentication service (decoy)
+* Telnet login service (decoy)
 
 ### Structured Logging
 
