@@ -274,3 +274,17 @@ Each event is stored as a JSON object:
 ## License
 
 This project is licensed under the [MIT] License - see the [LICENSE](LICENSE.txt) file for details.
+
+---
+
+## Mission Statement
+```text
+Mission Statement
+
+This project aims to design and implement a safe, accessible, and educational honeypot system that demonstrates core cybersecurity principles through practical application. By simulating common attack surfaces and capturing observable threat behavior, the project provides a hands-on environment for understanding reconnaissance, credential attacks, and automated probing techniques.
+
+A central goal of this work is to highlight the importance of viable open-source cybersecurity tools that are freely available to the public. Open-source projects play a critical role in democratizing security knowledge, enabling students, researchers, and practitioners to learn, experiment, and contribute without financial or institutional barriers. By building this honeypot using open technologies and maintaining a transparent design, this project supports the broader mission of making cybersecurity education more accessible, collaborative, and reproducible.
+
+Ultimately, this project seeks to reinforce that effective cybersecurity learning does not require expensive infrastructure—only thoughtful design, responsible implementation, and a commitment to open knowledge.
+```
+---
